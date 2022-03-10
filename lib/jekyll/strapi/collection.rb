@@ -34,6 +34,7 @@ module Jekyll
         end
 
         if result.data.kind_of?(Array)
+          Jekyll.logger.info "Jekyll Strapi:", "Retrieving array"
           # Add necessary properties
           result.data.each do |document|
             document.type = collection_name
@@ -44,6 +45,7 @@ module Jekyll
 
           result.data.each {|x| yield(x)}
         else
+          Jekyll.logger.info "Jekyll Strapi:", "Retrieving single type"
           # Add necessary properties
           result.data do |document|
             document.type = collection_name
