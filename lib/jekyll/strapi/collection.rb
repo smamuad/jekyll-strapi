@@ -33,15 +33,27 @@ module Jekyll
           raise "The Strapi server sent a error with the following status: #{response.code}. Please make sure it is correctly running."
         end
 
-        # Add necessary properties
-        result.data.each do |document|
-          document.type = collection_name
-          document.collection = collection_name
-          document.id ||= document._id
-          document.url = @site.strapi_link_resolver(collection_name, document)
-        end
+        if result.data.kind_of?(Array)
+          # Add necessary properties
+          result.data.each do |document|
+            document.type = collection_name
+            document.collection = collection_name
+            document.id ||= document._id
+            document.url = @site.strapi_link_resolver(collection_name, document)
+          end
 
-        result.data.each {|x| yield(x)}
+          result.data.each {|x| yield(x)}
+        else
+          # Add necessary properties
+          result.data do |document|
+            document.type = collection_name
+            document.collection = collection_name
+            document.id ||= document._id
+            document.url = @site.strapi_link_resolver(collection_name, document)
+          end
+
+          result.data {|x| yield(x)}
+        end
       end
     end
   end
