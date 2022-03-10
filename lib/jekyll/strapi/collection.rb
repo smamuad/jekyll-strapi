@@ -56,6 +56,8 @@ module Jekyll
             document.url = @site.strapi_link_resolver(collection_name, document)
           end
 
+          Jekyll.logger.info "Jekyll Strapi:", "Result.data: #{result.data}"
+
           result.data {|x| yield(x)}
         end
       end
