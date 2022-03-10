@@ -33,6 +33,8 @@ module Jekyll
           raise "The Strapi server sent a error with the following status: #{response.code}. Please make sure it is correctly running."
         end
 
+        Jekyll.logger.info "Jekyll Strapi:", "Verifying Update"
+
         if result.data.kind_of?(Array)
           Jekyll.logger.info "Jekyll Strapi:", "Retrieving array"
           # Add necessary properties
